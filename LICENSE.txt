@@ -1,0 +1,25 @@
+Copyright (c) 2025 Voxarys
+
+Permission & Restrictions:
+- You are granted permission to use, view, and modify this script for personal, non-commercial use only.
+- Redistribution — including sharing modified or original versions, posting online, or uploading to public or private repositories — is strictly prohibited without explicit written permission from the author.
+- Commercial use, including incorporation into monetized products, services, or paid content, is not permitted under any circumstances.
+
+Modifications:
+- You may modify this script for personal use only.
+- You may not share, publish, or distribute modified versions of this script in any form, including via online forums, pastebins, or code repositories, without explicit permission.
+
+Disclaimer of Warranty:
+This script is provided “as is”, without warranty of any kind, express or implied.  
+Use it at your own risk. The author shall not be held liable for any loss, damage, or unexpected behavior resulting from the use, misuse, or inability to use this script.
+
+Setup Notice:
+This script requires minimal setup, including:
+- Your Twitch bot account name (in the script known as NICK)
+- A valid OAuth token for your Twitch bot account (in the script known as OAUTH_TOKEN)
+- Your Twitch channel name (in the script known as CHANNEL)
+- Your discord invite link (in the script known as DISCORD)
+
+It will not function properly without correct configuration.
+
+By downloading, using, or modifying this script, you agree to all of the above terms. If you do not agree, do not use this script.
