@@ -16,5 +16,6 @@ the bot requires minimal setup, without that it won´t work.
 4. save the script.
 5. run the script by double-leftclicking the .py file
 6. when setup correctly, you should see a message in your twitch chat from your bot account as soon as you run the script, that is as follows: "[BotAccount] successfully booted up and connected to [TwitchChannel]´s Chat. Have a good stream!", [BotAccount] being your bot´s username and [TwitchChannel] being your username.
+
 That´s it. If you run into issues with the script BEFORE modifying it besides the setup, as stated in LICENSE.txt, feel free to make an issue here on github.
    
