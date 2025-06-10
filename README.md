@@ -6,7 +6,7 @@ the script was made and tested with Python 3.13.1. there is no guarantee that th
 
 # Setup
 the bot requires minimal setup, without that it won´t work.
-1. Make a new twitch account, called anything that signifies it as a bot, for example "VoxaryBot". this step is not really necessary, but very much recommended. 
+1. Make a new twitch account, called anything that signifies it as a bot, for example "VoxaryBot".
 2. log in to twitchtokengenerator.com with the bot account, and generate a oauth token.
 3. download and open the bot.py script and, under Config, replace:
 	- your_bot_account_name_here with your bot´s account name
