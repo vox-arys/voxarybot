@@ -84,14 +84,16 @@ def handle_command(command, username, sock):
     elif command.startswith("v!ping"): # can be used to check if the bot is still online or if it crashed. no response = offline
        return "Pong"
 
-    elif command.startswith("v!exit") and username.lower() == CHANNEL:          # v!exit command to exit the bot from chat; only usable by the user defined as the CHANNEL, aka the broadcaster
-        shutdown_message = f"PRIVMSG #{CHANNEL} :{NICK} disconnecting from {CHANNEL}'s Chat and shutting down...\r\n"
-        sock.send(shutdown_message.encode("utf-8"))
-        print("Exit command received. Disconnecting...")
-        time.sleep(2)
-        sock.close()
-        running = False
-        sys.exit()
+    elif command.startswith("v!exit"):
+        if username.lower() == CHANNEL.lower():
+            shutdown_message = f"PRIVMSG #{CHANNEL} :{NICK} disconnecting from {CHANNEL}'s Chat and shutting down...\r\n"
+            sock.send(shutdown_message.encode("utf-8"))
+            print("Exit command received. Disconnecting...")
+            time.sleep(2)
+            sock.close()
+            sys.exit()
+        else:
+            return f"@{username} you do not have permission to use this command! Only {CHANNEL} can use it!"
         return None
 
 # empty simple command template; copy-paste without the # to make it function. available variables: {username}, {message}. to use variables use f-strings ( f"text" instead of "text" ) in the bot reply
@@ -115,7 +117,6 @@ def run_bot(sock):
             for response in lines:
                 if response.startswith("PING"):
                     sock.send("PONG :tmi.twitch.tv\r\n".encode("utf-8"))
-                    print("Ping received. Sent Pong.")
                     continue
 
                 if "PRIVMSG" in response:
