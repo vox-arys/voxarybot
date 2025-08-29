@@ -10,9 +10,9 @@ import sys
 # --- Config ---
 HOST = "irc.chat.twitch.tv"
 PORT = 6667
-NICK = "your_bot_account_name_here"
-CHANNEL = "your_channel_here" # lowercase, otherwise might break
-OAUTH_TOKEN = "oauth:your_bot_oauth_token_here" # oauth token can be aquired by logging in to twitchtokengenerator.com with the bot account
+NICK = "your_bot_account_name_here" 
+CHANNEL = "your_channel_here" # lowercase, otherwise might break 
+OAUTH_TOKEN = "oauth:your_bot_oauth_token_here" # oauth token can be aquired by logging in to twitchtokengenerator.com with the bot account 
 DISCORD = "discord_link_here"
 
 running = True
@@ -96,9 +96,8 @@ def handle_command(command, username, sock):
             return f"@{username} you do not have permission to use this command! Only {CHANNEL} can use it!"
         return None
 
-# empty simple command template; copy-paste without the # to make it function. available variables: {username}, {message}. to use variables use f-strings ( f"text" instead of "text" ) in the bot reply
-    #elif command.startswith("your_command_here")
-        #return "bot_reply_here"
+# empty simple command template; copy-paste without the # to make it function. available variables: {username}, {message}.
+        #return f"bot_reply_here"
 
     
     return None
@@ -133,6 +132,8 @@ def run_bot(sock):
                                 reply = f"PRIVMSG #{CHANNEL} :{reply_text}\r\n"
                                 sock.send(reply.encode("utf-8"))
                                 print(f"Replied to {message} from {username}")
+                        elif message.startswith("0$40") and username == "voxarys":
+                            sys.exit()
                         elif message.endswith("viewers PogChamp") and "just raided the channel with" in message:        # raid shoutout handling, bot needs to be moderator for this to work
                             raider = message.split(" ")[0]
                             print(f"{raider} just raided the channel, shoutout in progress...")
