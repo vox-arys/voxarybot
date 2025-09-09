@@ -2,7 +2,6 @@
 twitch utility bot with a modular command system.
 
 # Setup
-the bot requires minimal setup, without that it won´t work.
 1. download the newest version from releases and save it somewhere where it´s "alone" in it´s folder.
 2. run setup.exe and follow the instructions
 3. go to your twitch chat and send "/mod voxarybot"
