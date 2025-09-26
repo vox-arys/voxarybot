@@ -40,6 +40,9 @@ def dcSetup():
     with open("commands.json", "w") as commandsfile:
         json.dump(commands, commandsfile, indent=2)
 
+def createModFile():
+    
+
 if __name__ == "__main__":
     channelSetup()
     dcSetup()
