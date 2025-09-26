@@ -9,4 +9,6 @@ twitch utility bot with a modular command system.
 #
 note: the bot is set up to automatically shoutout raiders, but this functionality works based on the incoming raid response by streamelements. if streamelements isn´t set up, then auto-shoutouts will not work.
 
-note 2: this bot is NOT a chat moderation bot. it will do absolutely nothing against anyone. 
+note 2: the bot is set up to shut itself down upon receiving Sery_Bot´s raidout message. if Sery_Bot isn´t set up, you will have to shut down the bot manually after stream.
+
+note 3: this bot is NOT a chat moderation bot. it will do absolutely nothing against anyone. 
