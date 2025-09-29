@@ -9,9 +9,17 @@ PORT = 6667
 NICK = "VoxaryBot" 
 OAUTH_TOKEN = "oauth:*******************************" # censoring to avoid unauthorized access to the bot´s account
 
-with open("settings.json", "r") as jsonfile:
-    settingsdata = json.load(jsonfile)
+with open("settings.json", "r") as settingsfile:
+    settingsdata = json.load(settingsfile)
     print("Reading settings.json...")
+
+with open("moderation.json", "r") as modfile
+    modActionTriggers = json.load(modfile)
+modActions = {
+    action: [word.strip() for word in words.split(",")]
+    for action, words in modActionTriggers.items()
+}
+
 
 GreetMessage = settingsdata['BotOnlineMessage']
 CHANNEL = settingsdata['Channel'].lower()
@@ -102,6 +110,14 @@ def handle_command(command, username, sock):
 
     return None
 
+def moderate(username: str, message: str):
+    matches = []
+    for action, keywords in modActions.items():
+        for keyword in keywords:
+            if keyword.lower() in modActions.items():
+                matches.append(action, keyword)
+    return matches
+
 def run_bot(sock):
     global running
     buffer = ""
@@ -122,8 +138,21 @@ def run_bot(sock):
                     if len(parts) >= 3:
                         info = parts[1].split("!")
                         username = info[0]
-                        message = parts[2].strip()
-                        print(f"{username}: {message}")
+                        message = parts[2].strip()           
+                        modActionRequired = moderate(username, message)
+                        if modActionRequired:
+                            for action, keyword in badWordMatches:
+                                reason = modActionTriggers['reason']
+                                print(f"Taking {action} action against {username} (said '{keyword}')")
+                                if action = Warn:
+                                    sock.send(f"PRIVMSG #{CHANNEL} :/warn {username} {reason} Consequence: Warning".encode("utf-8"))
+                                elif action = Timeout:
+                                    silenceTime = modActionTriggers['TimeoutTime']
+                                    sock.send(f"PRIVMSG #{CHANNEL} :/timeout {username} {silenceTime} {reason} Consequence: Timeout of {silenceTime} seconds.")
+                                elif action = Ban:
+                                    sock.send(f"PRIVMSG #{CHANNEL} :/ban {username} {reason} Consequence: Ban.")  
+                        else:
+                            print(f"{username}: {message}")    
 
                         if message.startswith("v!") or message.startswith("!"):
                             reply_text = handle_command(message.lower(), username, sock)
@@ -136,7 +165,6 @@ def run_bot(sock):
                             print(f"{raider} just raided the channel, shoutout in progress...")
                             sock.send(f"PRIVMSG #{CHANNEL} :/shoutout {raider}".encode("utf-8"))
                         
-
 
         except socket.timeout:
             continue

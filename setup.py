@@ -2,7 +2,8 @@ import time
 import json
 
 user = "{user}"
-def channelSetup():    print("note: all of this can be changed any time via the two generated .json files.")
+def channelSetup():    
+    print("note: all of this can be changed any time via the generated .json files.")
     channel = input("Please enter your Twitch channel name: ").strip()
     try:
         with open("settings.json", "r") as settingsfile:
@@ -42,9 +43,12 @@ def dcSetup():
 
 def createModFile():
     print("Creating Moderation Settings File...")
-    modWarn = {
-            "Channel": "placeholderChannelName",
-            "BotOnlineMessage": "VoHiYo"
+    moderation = {
+            "Warn": "place holder 1, placeholder2",
+            "Timeout": "bitch, nigga",
+            "Ban": "dogehype, streamboo",
+            "TimeoutTime": "300",
+            "reason": "please do not use '{keyword}' in {CHANNEL}`s chat."
             }
     with open("moderation.json", "w") as modfile:
         json.dump(moderation, modfile, indent=2)
