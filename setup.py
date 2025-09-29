@@ -41,7 +41,13 @@ def dcSetup():
         json.dump(commands, commandsfile, indent=2)
 
 def createModFile():
-    
+    print("Creating Moderation Settings File...")
+    modWarn = {
+            "Channel": "placeholderChannelName",
+            "BotOnlineMessage": "VoHiYo"
+            }
+    with open("moderation.json", "w") as modfile:
+        json.dump(moderation, modfile, indent=2)
 
 if __name__ == "__main__":
     channelSetup()

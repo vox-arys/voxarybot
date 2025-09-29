@@ -135,7 +135,9 @@ def run_bot(sock):
                             raider = message.split(" ")[0]
                             print(f"{raider} just raided the channel, shoutout in progress...")
                             sock.send(f"PRIVMSG #{CHANNEL} :/shoutout {raider}".encode("utf-8"))
-                            
+                        
+
+
         except socket.timeout:
             continue
         except Exception as e:
