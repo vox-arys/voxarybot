@@ -4,11 +4,10 @@ import time
 import sys
 import json
 
-# --- Config ---
 HOST = "irc.chat.twitch.tv"
 PORT = 6667
 NICK = "VoxaryBot" 
-OAUTH_TOKEN = "oauth:*******************************" # censoring to avoid... stuff
+OAUTH_TOKEN = "oauth:*******************************" # censoring to avoid unauthorized access to the bot´s account
 
 with open("settings.json", "r") as jsonfile:
     settingsdata = json.load(jsonfile)
@@ -73,23 +72,15 @@ def monitor_input(sock):
 def handle_command(command, username, sock):
     cmd_key = command.split(" ")[0].lower()
 
-    # --- Special case: !aboutbot ---
     if cmd_key == "!aboutbot":
         return f"I'm {NICK}, a twitch utility bot programmed by Voxarys. Nice to meet you, {username}! VoHiYo"
 
-    # --- Auto-generated !commands list ---
     if cmd_key == "!commands":
-        # Collect JSON-based commands
         all_cmds = list(commands_data.keys())
-        
-        # Add hardcoded ones manually
         all_cmds.append("!aboutbot")
-
-        # Exclude restricted/internal commands
         if "!exit" in all_cmds:
             all_cmds.remove("!exit")
 
-        # Format nicely
         cmd_list = ", ".join(sorted(all_cmds))
         return f"@{username} Available commands: {cmd_list}"
 
