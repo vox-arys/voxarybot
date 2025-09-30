@@ -21,6 +21,7 @@ try:
     }
 except FileNotFoundError:
     print("Error: Settings files not found. Please run setup.exe")
+    time.sleep(5)
 GreetMessage = settingsdata['BotOnlineMessage']
 CHANNEL = settingsdata['Channel'].lower()
 print(f"Channel set to {CHANNEL}")
