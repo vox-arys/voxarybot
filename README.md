@@ -6,7 +6,7 @@ scuffed python-based twitch utility bot.
 2. run setup.exe and follow the instructions
 3. go to your twitch chat and send "/mod voxarybot"
 4. whenever you´re ready to stream, just run bot.exe. you should see a message from the bot in your chat.
-#
+
 note: the bot is set up to automatically shoutout raiders, but this functionality works based on the incoming raid response by streamelements. if streamelements isn´t set up, then auto-shoutouts will not work.
 
 note 2: the bot is set up to shut itself down upon receiving Sery_Bot´s raidout message. if Sery_Bot isn´t set up, you will have to shut down the bot manually after stream.
@@ -33,7 +33,19 @@ you can edit any commands at any time, even during stream. Just remember to relo
 5. again, make sure to add a comma "," to the end of the second-to-last line.
 6. save moderation.json.
 
-unlike with commands, you cannot reload changes to moderation.json without closing and restarting the bot. I´m working on it.
+unlike with commands, you cannot reload changes to moderation.json without closing and restarting the bot. I´m working on that.
+
+# Console Commands
+These commands can be used by the person using the bot, in the bot´s console window:
+- say [message] - say something via the bot.
+- reloadcommands - reload commands.json
+- exit - disconnect and shut down the bot
+
+
+
+
+# What is planned
+- allow for moderation.json changes to be reloaded during runtime
 
 # How the bot works (aka Technical Overview)
 upon running setup.exe, 3 .json files are created, those being:
@@ -50,5 +62,3 @@ The Auto-Shoutout and end-of-stream-autoshutdown work by listening for specific 
 
 The bot doesn´t know, nor care, who is a moderator, who is a VIP, etc.. It doesn´t even know who the broadcaster is. In essence, all it does is listen to twitch chat and respond if needed. It only does what it is told via the .json files.
 
-# What is planned
-- logging every unique chatter to a file

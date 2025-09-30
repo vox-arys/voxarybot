@@ -77,12 +77,12 @@ def monitor_input(sock):
             load_commands()
    
 def handle_command(command, username, sock):
-    cmd_key = command.split(" ")[0].lower()
+    cmd = command.split(" ")[0].lower()
 
-    if cmd_key == "!aboutbot":
+    if cmd == "!aboutbot":
         return f"I'm {NICK}, a twitch utility bot programmed by Voxarys. Nice to meet you, {username}! VoHiYo"
 
-    if cmd_key == "!commands":
+    if cmd == "!commands":
         all_cmds = list(commands_data.keys())
         all_cmds.append("!aboutbot")
         if "!exit" in all_cmds:
@@ -91,12 +91,12 @@ def handle_command(command, username, sock):
         cmd_list = ", ".join(sorted(all_cmds))
         return f"@{username} Available commands: {cmd_list}"
 
-    if cmd_key in commands_data:
-        response = commands_data[cmd_key]
+    if cmd in commands_data:
+        response = commands_data[cmd]
         response = response.replace("{user}", username)
         return response
 
-    if cmd_key == "!exit":
+    if cmd == "!exit":
         if username.lower() == CHANNEL.lower():
             shutdown_message = f"PRIVMSG #{CHANNEL} :{NICK} disconnecting from {CHANNEL}'s Chat and shutting down...\r\n"
             sock.send(shutdown_message.encode("utf-8"))
