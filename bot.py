@@ -13,13 +13,12 @@ with open("settings.json", "r") as settingsfile:
     settingsdata = json.load(settingsfile)
     print("Reading settings.json...")
 
-with open("moderation.json", "r") as modfile
+with open("moderation.json", "r") as modfile:
     modActionTriggers = json.load(modfile)
 modActions = {
     action: [word.strip() for word in words.split(",")]
     for action, words in modActionTriggers.items()
 }
-
 
 GreetMessage = settingsdata['BotOnlineMessage']
 CHANNEL = settingsdata['Channel'].lower()
@@ -144,15 +143,24 @@ def run_bot(sock):
                             for action, keyword in badWordMatches:
                                 reason = modActionTriggers['reason']
                                 print(f"Taking {action} action against {username} (said '{keyword}')")
-                                if action = Warn:
+                                if action == Warn:
                                     sock.send(f"PRIVMSG #{CHANNEL} :/warn {username} {reason} Consequence: Warning".encode("utf-8"))
-                                elif action = Timeout:
+                                elif action == Timeout:
                                     silenceTime = modActionTriggers['TimeoutTime']
                                     sock.send(f"PRIVMSG #{CHANNEL} :/timeout {username} {silenceTime} {reason} Consequence: Timeout of {silenceTime} seconds.")
-                                elif action = Ban:
+                                elif action == Ban:
                                     sock.send(f"PRIVMSG #{CHANNEL} :/ban {username} {reason} Consequence: Ban.")  
                         else:
-                            print(f"{username}: {message}")    
+                            print(f"{username}: {message}")
+
+                        try:
+                            with open("uniqueChatters", "r") as chattersFile:
+                                usernames = {line.strip() for line in chattersFile}
+                        except FileNotFoundError:
+                            usernames = set()
+                        if username not in usernames:
+                            with open("uniqueChatters.txt", "a") as chattersFile:
+                                print(username)
 
                         if message.startswith("v!") or message.startswith("!"):
                             reply_text = handle_command(message.lower(), username, sock)
