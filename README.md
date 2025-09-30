@@ -1,6 +1,7 @@
 # VoxaryBot
 scuffed python-based twitch utility bot.
 
+
 # Setup
 1. download the newest version from releases and save it in a new folder.
 2. run setup.exe and follow the instructions
@@ -13,6 +14,7 @@ note 2: the bot is set up to shut itself down upon receiving Sery_Bot´s raidout
 
 note 3: the chat moderation features are still in what equates to open beta. I give zero guarantee that it will work.
 
+
 # How to add Commands
 1. navigate to where you saved the bot
 2. open commands.json with any text editor program
@@ -23,17 +25,19 @@ note 3: the chat moderation features are still in what equates to open beta. I g
 
 you can edit any commands at any time, even during stream. Just remember to reload the commands after changing anything.
 
+
 # How to use the moderation features [BETA]
 1. navigate to where you saved the bot
 2. open moderation.json with any text editor program
 3. the moderation settings are in the format of "action": "trigger1, trigger2", with the exceptions of TimeoutTime and reason
  - TimeoutTime is the time the chatter is timed out when they trigger a timeout
- - reason is the reason the chatter receives when they trigger a moderation action, with the addition of "Consequence: action"
+ - reason is the reason the chatter receives when they trigger a moderation action, with the addition of "Consequence: [action]"
 4. to add a keyword, just add it to the trigger words at the desired action. only the pre-made actions (Warn, Timeout, Ban) are valid, any custom actions are ignored.
 5. again, make sure to add a comma "," to the end of the second-to-last line.
 6. save moderation.json.
 
 unlike with commands, you cannot reload changes to moderation.json without closing and restarting the bot. I´m working on that.
+
 
 # Console Commands
 These commands can be used by the person using the bot, in the bot´s console window:
@@ -42,10 +46,9 @@ These commands can be used by the person using the bot, in the bot´s console wi
 - exit - disconnect and shut down the bot
 
 
-
-
 # What is planned
 - allow for moderation.json changes to be reloaded during runtime
+
 
 # How the bot works (aka Technical Overview)
 upon running setup.exe, 3 .json files are created, those being:
