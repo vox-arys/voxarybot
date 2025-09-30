@@ -42,20 +42,26 @@ def dcSetup():
         json.dump(commands, commandsfile, indent=2)
 
 def createModFile():
-    print("Creating Moderation Settings File...")
-    moderation = {
-            "Warn": "place holder 1, placeholder2",
-            "Timeout": "bitch, nigga",
-            "Ban": "dogehype, streamboo",
-            "TimeoutTime": "300",
-            "reason": "please do not use '{keyword}' in {CHANNEL}`s chat."
-            }
-    with open("moderation.json", "w") as modfile:
-        json.dump(moderation, modfile, indent=2)
-
+    try:
+        print("reading moderation.json...")
+        with open("moderation.json", "r") as modfile:
+            moderation = json.load(modfile)
+    except FileNotFoundError:
+        print("Moderation Settings File not found, creating new one...")
+        moderation = {
+                "Warn": "place holder 1, placeholder2",
+               "Timeout": "bitch, nigga",
+               "Ban": "dogehype, streamboo",
+               "TimeoutTime": "300",
+               "reason": "please do not use '{keyword}' in {CHANNEL}`s chat."
+               }
+        with open("moderation.json", "w") as modfile:
+            json.dump(moderation, modfile, indent=2)
+        print("Moderation Settings File created")
 if __name__ == "__main__":
     channelSetup()
     dcSetup()
     botGreetSetup()
+    createModFile()
     print(f"Setup complete!")
     time.sleep(2)

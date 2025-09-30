@@ -8,18 +8,19 @@ HOST = "irc.chat.twitch.tv"
 PORT = 6667
 NICK = "VoxaryBot" 
 OAUTH_TOKEN = "oauth:*******************************" # censoring to avoid unauthorized access to the bot´s account
+try:
+    with open("settings.json", "r") as settingsfile:
+        settingsdata = json.load(settingsfile)
+        print("Reading settings.json...")
 
-with open("settings.json", "r") as settingsfile:
-    settingsdata = json.load(settingsfile)
-    print("Reading settings.json...")
-
-with open("moderation.json", "r") as modfile:
-    modActionTriggers = json.load(modfile)
-modActions = {
-    action: [word.strip() for word in words.split(",")]
-    for action, words in modActionTriggers.items()
-}
-
+    with open("moderation.json", "r") as modfile:
+        modActionTriggers = json.load(modfile)
+    modActions = {
+        action: [word.strip() for word in words.split(",")]
+        for action, words in modActionTriggers.items()
+    }
+except FileNotFoundError:
+    print("Error: Settings files not found. Please run setup.exe")
 GreetMessage = settingsdata['BotOnlineMessage']
 CHANNEL = settingsdata['Channel'].lower()
 print(f"Channel set to {CHANNEL}")
@@ -30,6 +31,8 @@ def load_commands():
         with open("commands.json", "r") as cmdfile:
             commands_data = json.load(cmdfile)
             print("Commands loaded from commands.json")
+    except FileNotFoundError:
+        print("Commands.json not found, please run setup.exe")
     except Exception as e:
         print(f"Error loading commands.json: {e}")
         commands_data = {}
