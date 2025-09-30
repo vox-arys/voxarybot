@@ -25,7 +25,7 @@ except FileNotFoundError:
 GreetMessage = settingsdata['BotOnlineMessage']
 CHANNEL = settingsdata['Channel'].lower()
 print(f"Channel set to {CHANNEL}")
-
+running = True
 def load_commands():
     global commands_data
     try:
@@ -38,7 +38,6 @@ def load_commands():
         print(f"Error loading commands.json: {e}")
         commands_data = {}
 
-running = True
 def connect_to_twitch():
     try:
         sock = socket.socket()
