@@ -7,7 +7,7 @@ import json
 HOST = "irc.chat.twitch.tv"
 PORT = 6667
 NICK = "VoxaryBot" 
-OAUTH_TOKEN = "oauth:*******************************" # censoring to avoid unauthorized access to the bot´s account
+OAUTH_TOKEN = "oauth:**********************" # censoring to avoid unauthorized access to the bot´s account
 try:
     with open("settings.json", "r") as settingsfile:
         settingsdata = json.load(settingsfile)
@@ -23,6 +23,8 @@ except FileNotFoundError:
     print("Error: Settings files not found. Please run setup.exe")
     time.sleep(5)
 GreetMessage = settingsdata['BotOnlineMessage']
+if GreetMessage == "":
+    GreetMessage = "VoHiYo"
 CHANNEL = settingsdata['Channel'].lower()
 print(f"Channel set to {CHANNEL}")
 running = True
@@ -80,6 +82,7 @@ def monitor_input(sock):
             load_commands()
    
 def handle_command(command, username, sock):
+    global running
     cmd = command.split(" ")[0].lower()
 
     if cmd == "!aboutbot":
@@ -105,8 +108,8 @@ def handle_command(command, username, sock):
             sock.send(shutdown_message.encode("utf-8"))
             print("Exit command received. Disconnecting...")
             time.sleep(2)
+            running = False
             sock.close()
-            sys.exit()
         else:
             return f"@{username} you do not have permission to use this command! Only {CHANNEL} can use it!"
 
@@ -116,8 +119,8 @@ def moderate(username: str, message: str):
     matches = []
     for action, keywords in modActions.items():
         for keyword in keywords:
-            if keyword.lower() in modActions.items():
-                matches.append(action, keyword)
+            if keyword.lower() in message.lower():
+                matches.append((action, keyword))
     return matches
 
 def run_bot(sock):
@@ -143,29 +146,29 @@ def run_bot(sock):
                         message = parts[2].strip()           
                         modActionRequired = moderate(username, message)
                         if modActionRequired:
-                            for action, keyword in badWordMatches:
+                            for action, keyword in modActionRequired:
                                 reason = modActionTriggers['reason']
                                 print(f"Taking {action} action against {username} (said '{keyword}')")
-                                if action == Warn:
-                                    sock.send(f"PRIVMSG #{CHANNEL} :/warn {username} {reason} Consequence: Warning".encode("utf-8"))
-                                elif action == Timeout:
+                                if action == "Warn":
+                                    sock.send(f"PRIVMSG #{CHANNEL} :/warn {username} {reason} Consequence: Warning\r\n".encode("utf-8"))
+                                elif action == "Timeout":
                                     silenceTime = modActionTriggers['TimeoutTime']
-                                    sock.send(f"PRIVMSG #{CHANNEL} :/timeout {username} {silenceTime} {reason} Consequence: Timeout of {silenceTime} seconds.")
-                                elif action == Ban:
-                                    sock.send(f"PRIVMSG #{CHANNEL} :/ban {username} {reason} Consequence: Ban.")  
+                                    sock.send(f"PRIVMSG #{CHANNEL} :timeout {username} {silenceTime} {reason} Consequence: Timeout of {silenceTime} seconds.\r\n".encode("utf-8"))
+                                elif action == "Ban":
+                                    sock.send(f"PRIVMSG #{CHANNEL} :/ban {username} {reason} Consequence: Ban\r\n".encode("utf-8"))
                         else:
                             print(f"{username}: {message}")
 
                         try:
-                            with open("uniqueChatters", "r") as chattersFile:
+                            with open("uniqueChatters.txt", "r") as chattersFile:
                                 usernames = {line.strip() for line in chattersFile}
                         except FileNotFoundError:
                             usernames = set()
                         if username not in usernames:
                             with open("uniqueChatters.txt", "a") as chattersFile:
-                                print(username)
+                                chattersFile.write(username + "\n")
 
-                        if message.startswith("v!") or message.startswith("!"):
+                        if  message.startswith("!"):
                             reply_text = handle_command(message.lower(), username, sock)
                             if reply_text:
                                 reply = f"PRIVMSG #{CHANNEL} :{reply_text}\r\n"
@@ -174,7 +177,7 @@ def run_bot(sock):
                         elif message.endswith("viewers PogChamp") and "just raided the channel with" in message:
                             raider = message.split(" ")[0]
                             print(f"{raider} just raided the channel, shoutout in progress...")
-                            sock.send(f"PRIVMSG #{CHANNEL} :/shoutout {raider}".encode("utf-8"))
+                            sock.send(f"PRIVMSG #{CHANNEL} :/shoutout {raider}\r\n".encode("utf-8"))
                         
 
         except socket.timeout:

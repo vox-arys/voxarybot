@@ -53,7 +53,7 @@ def createModFile():
                "Timeout": "bitch, nigga",
                "Ban": "dogehype, streamboo",
                "TimeoutTime": "300",
-               "reason": "please do not use '{keyword}' in {CHANNEL}`s chat."
+               "reason": "please watch your language in this chat."
                }
         with open("moderation.json", "w") as modfile:
             json.dump(moderation, modfile, indent=2)
