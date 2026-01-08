@@ -14,6 +14,7 @@ note 2: the bot is set up to shut itself down upon receiving Sery_Bot´s raidout
 
 note 3: the chat moderation features are still in what equates to open beta. I give zero guarantee that it will work.
 
+note 4: testing the bot in action has revealed that none of the features mentioned in the above notes currently work. I will fix that
 
 # How to add Commands
 1. navigate to where you saved the bot
@@ -26,7 +27,7 @@ note 3: the chat moderation features are still in what equates to open beta. I g
 you can edit any commands at any time, even during stream. Just remember to reload the commands after changing anything.
 
 
-# How to use the moderation features [BETA]
+# [CURRENTLY BROKEN] How to use the moderation features [BETA] 
 1. navigate to where you saved the bot
 2. open moderation.json with any text editor program
 3. the moderation settings are in the format of "action": "trigger1, trigger2", with the exceptions of TimeoutTime and reason
@@ -48,6 +49,8 @@ These commands can be used by the person using the bot, in the bot´s console wi
 
 # What is planned
 - allow for moderation.json changes to be reloaded during runtime
+- logging chat to a file
+- adding settings to enable/disable unique chatter logging and chat logging
 
 
 # How the bot works (aka Technical Overview)
@@ -59,7 +62,7 @@ upon running setup.exe, 3 .json files are created, those being:
 when bot.exe is launched, it reads these files and connects to the channel set in settings.json. It then sends a message, also set in settings.json, to that same chat.
 After that, the bot goes into listening mode, in which it logs all chat messages to its console. In case a message starts with a "!", it passes it along to the handle_command() function, which, as the name implies, handles the commands. It looks at the text after the "!" and responds with whatever is assigned to that command in commands.json.
 
-When the bot detects a word in the message which is also found in moderation.json, it takes the username, the keyword that triggered the action, and the action, and does a "/" command for that action in the twitch chat. This is also why the bot has to be a moderator of the channel for full functionality.
+When the bot detects a word in the message which is also found in moderation.json, it takes the username, the keyword that triggered the action, and the action, and does a "/" command for that action in the twitch chat. This is also why the bot has to be a moderator of the channel for full functionality. This functionality is currently broken.
 
 The Auto-Shoutout and end-of-stream-autoshutdown work by listening for specific messages from specific users, in this case it´s the default incoming raid message by Streamelements for the shoutouts, and the default message that Sery_Bot sends when you raid out which tells users where the raid went for the auto-shutdown.
 
